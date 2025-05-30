@@ -18,6 +18,9 @@ def index():
 
 @app.route('/trial', methods=['GET', 'POST'])
 def trial():
+    if 'trials' not in session:
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
         data = {
             'image': request.form['image'],
@@ -26,8 +29,10 @@ def trial():
             'timestamp': time.time()
         }
         session['results'].append(data)
+
     if not session['trials']:
         return redirect(url_for('complete'))
+
     current = session['trials'].pop()
     return render_template('trial.html', image=current['image'], position=current['position'])
 
