@@ -1,6 +1,6 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session
-import random, time
+import random, time, os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -36,4 +36,5 @@ def complete():
     return render_template('complete.html', results=session['results'])
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
