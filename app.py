@@ -1,13 +1,15 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session
-import random, time, os
+import random, time ,os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-IMAGES = [f'item{i}.jpg' for i in range(1, 25)]  # 24枚
-TRIALS = [{'image': img, 'position': 'left'} for img in IMAGES[:12]] + \
-         [{'image': img, 'position': 'right'} for img in IMAGES[12:]]
+# 試行セット（4枚ずつ）
+LEFT_IMAGES = [f'item{i}.jpg' for i in range(1, 5)]      # item1〜item4
+RIGHT_IMAGES = [f'item{i}.jpg' for i in range(5, 9)]     # item5〜item8
+
+TRIALS = [{'image': img, 'position': 'left'} for img in LEFT_IMAGES] + \
+         [{'image': img, 'position': 'right'} for img in RIGHT_IMAGES]
 random.shuffle(TRIALS)
 
 @app.route('/')
@@ -29,16 +31,24 @@ def trial():
             'timestamp': time.time()
         }
         session['results'].append(data)
+        session.modified = True
 
     if not session['trials']:
         return redirect(url_for('complete'))
 
     current = session['trials'].pop()
-    return render_template('trial.html', image=current['image'], position=current['position'])
+    session.modified = True
+
+    # 使用するテンプレートを分岐
+    if current['position'] == 'left':
+        return render_template('left_trial.html', image=current['image'], position='left')
+    else:
+        return render_template('right_trial.html', image=current['image'], position='right')
 
 @app.route('/complete')
 def complete():
-    return render_template('complete.html', results=session['results'])
+    return render_template('complete.html')
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))

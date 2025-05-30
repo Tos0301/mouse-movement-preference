@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>商品選択</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>商品選択（左下）</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='left_style.css') }}">
 </head>
 <body>
     <div class="container">
         <img src="{{ url_for('static', filename='images/' + image) }}" class="product-image">
-        <form method="POST" class="button-area {{ position }}">
+        <form method="POST" class="button-area">
             <input type="hidden" name="image" value="{{ image }}">
             <input type="hidden" name="position" value="{{ position }}">
             <button name="choice" value="buy">購入する</button>
