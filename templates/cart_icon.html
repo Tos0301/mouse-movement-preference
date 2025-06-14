@@ -1,0 +1,50 @@
+<style>
+#cart-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+#cart-badge {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 14px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    {% if cart_count == 0 %}display: none;{% endif %}
+}
+</style>
+
+<div id="cart-icon" onclick="window.location.href='/cart'">
+    🛒<span id="cart-badge">{{ cart_count }}</span>
+</div>
+
+<script>
+// サーバーから現在の合計点数を取得してバッジを更新
+function fetchCartCountAndUpdateBadge() {
+    fetch("/cart_count")
+        .then(response => response.json())
+        .then(data => {
+            const badge = document.getElementById("cart-badge");
+            if (data.count > 0) {
+                badge.innerText = data.count;
+                badge.style.display = "inline-block";
+            } else {
+                badge.style.display = "none";
+            }
+        })
+        .catch(error => console.error("カート数の取得に失敗しました:", error));
+}
+
+// カートに追加後に呼び出す関数
+function updateCartBadge() {
+    fetchCartCountAndUpdateBadge();
+}
+</script>
+
