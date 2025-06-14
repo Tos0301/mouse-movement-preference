@@ -29,7 +29,7 @@ def log_action(action, page="", total_price=0, hotels=None, quantities=None, sub
     hotels = hotels or []
     quantities = quantities or []
     subtotals = subtotals or []
-    room_types = room_types or []
+    room_type = room_type or []
     breakfast_options = breakfast_options or []
     
     worksheet.append_row([
