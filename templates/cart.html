@@ -90,8 +90,8 @@
                 <td class="text-center">
                     <form method="POST" action="{{ url_for('update_cart') }}">
                         <input type="hidden" name="product_id" value="{{ item.product.id }}">
-                        <input type="hidden" name="room_type" value="{{ item.color }}">
-                        <input type="hidden" name="breakfast_options" value="{{ item.size }}">
+                        <input type="hidden" name="room_type" value="{{ item.room_type }}">
+                        <input type="hidden" name="breakfast_options" value="{{ item.breakfast_options }}">
                         <input type="number" name="quantity" value="{{ item.quantity }}"
                                min="0" onchange="this.form.submit()" class="form-control quantity-input">
                     </form>
