@@ -49,6 +49,11 @@ def load_products():
     for product in products:
         product['room_type'] = product['room_type'].split('|') if product['room_type'] else []
         product['breakfast_options'] = product['breakfast_options'].split('|') if product['breakfast_options'] else []
+
+        if product.get('breakfast_prices'):
+            product[ 'breakfast_prices']=list(map(int, product["breakfast_prices"].split('|')))
+        else:
+            product['breakfast_prices'] = []
     
     return products
 
