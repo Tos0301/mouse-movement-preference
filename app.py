@@ -127,6 +127,9 @@ def product_detail(product_id):
         base_prefix = product["image"].rsplit(".", 1)[0]  # 例: towel_b
         room_type = product.get("room_type", [])
         default_room_type = room_type[0] if room_type else ""
+        breakfast_options = product.get("breakfast_options", [])
+        breakfast_prices = product.get("breakfast_prices", [])
+        breakfast_combined = list(zip(breakfast_options, breakfast_prices))
 
         # 1枚目：カラーバリエーション画像（towel_b_sand-beige_1.jpg）
         first_image = f"{base_prefix}_{default_room_type}_1.jpg"
@@ -150,6 +153,7 @@ def product_detail(product_id):
         specs=specs_data.get(product_id, "(商品説明がありません)"),
         image_list=image_list,
         base_prefix=base_prefix  # JSに渡す
+        breakfast_combined=breakfast_combined 
     )
 
 

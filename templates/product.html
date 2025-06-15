@@ -100,7 +100,7 @@
             {% if product.breakfast_options %}
             <label for="breakfast_options">朝食:</label>
             <select name="breakfast_options" id="breakfast-select" class="form-control mb-2">
-                {% for bf, price in product.breakfast_options|zip(product.breakfast_prices) %}
+                {% for bf, price in product.breakfast_combined %}
                 <option value="{{ bf }}" data-extra-price="{{ price }}">{{ bf }}</option>
                 {% endfor %}
             </select>
